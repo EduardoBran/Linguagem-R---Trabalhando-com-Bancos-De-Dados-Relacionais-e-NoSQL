@@ -1,0 +1,141 @@
+	    ********* Trabalhando com Bancos de Dados Relacionais e NoSQL em R *********
+
+
+
+    Embora estejamos na era do Big Data, os Banco de Dados Relacionais e NoSQL ainda tem uma
+parcela muito significativa tanto como fonte de dados como destino de dados, ou seja, podemos
+coletar dados de um banco de dados para fazer análises utiliando linguagem R e depois que concluído
+o trabalho de análise podemos salvar o resultado em um banco de dados seja relacional ou não.
+
+    Os Bancos de Dados são uma fonte de dados importatíssimas. Podemos ter como fonte de dados um
+arquivo TXT, excel, uma página web (com web scraping) e o banco de dados.
+
+   - Os Bancos de Dados Relacionais (RDBMS) normalmente se referem a conjunto de dados estruturados.
+
+     Quando acessamos um sistema de vendas, transações de modo geral, tudo isso no backend, no servidor
+     tem na verdade um Banco de Dados Relacional gravado esses dados em um formato de tabela.
+
+
+   - Os Bancos de Dados Não Relacionais (NoSQL) são usados para dados Semi ou Não Estruturados.
+
+     São mais recentes que o RDBMS que ganharam impulso por conta do Big Data, pois hoje não trabalhamos
+     apenas com dados estruturados, hoje nós temos uma grande massa de dados semi ou não estruturados,        por exemplo o e-mail que é um texto e com isso não é um dado estruturado e sim um dado semi ou 
+     não estruturado dependendo de como o e-mail está construído. 
+     Com isso precisamos de novos fórmas de análisar esse tipo de dado. O Banco Relacional então não é
+     a melhor alternativa e por isso usamos o NoSQL. 
+     Outros dados que normalmente são dados não estruturados são dados da web e caso a gente queira
+     coletar e analisar esses dados, precisariamos da estrura de banco de dados NoSQL.	
+
+
+
+
+############# Bancos de Dados Relacionais #############
+
+     Um banco de dados relacional é um conjunto de arquivos físicos que armazenam os dados em formato
+estruturado, organizdos em tabelas, que por sua vez são divididas em linhas e colunas.
+
+     Usamos um SGBD (MySQL, SQL Server, Oracle, PostgreSQL) que é um Sistema Gerenciados de Banco de Dados ou em inglês RDBMS - Relational Database Managemente System para gerenciar os arquivos do banco de dados. 
+
+     E usamos linguagem SQL para manipular os dados em um banco de dados relacional.
+
+
+
+
+
+
+############# Linguagem SQL #############
+
+     É uma linguagem de consulta. Não é uma linguagem de programação.
+
+     Praticamente qualquer banco de dado relacional utilizam a linguagem SQL para manipulação dos dados.
+
+
+
+############# MySQL #############
+
+create database titanicDB;
+
+use titanicDB;
+
+CREATE TABLE titanic (
+   pclass char(3)
+)
+
+SELECT * FROM titanicDB.titanic;
+
+select name, age, sex, pclass from titanic where age > 70;
+
+
+# Importar tabela
+
+Botão direito / Table Data Import Wizard
+
+# criando subset dos dados
+
+select name, age, sex, pclass from titanic where age > 70;
+
+
+# fazendo agrupamento
+
+# seleciona as colunas "pclass" e "survived" da tabela "titanic" e calcula a média da idade
+# (coluna # "age") de cada grupo de dados, que é nomeada como "media" usando a função AVG no SELECT. # Para usar a função AVG em uma consulta, é necessário agrupar os resultados por todas as colunas que # estão no SELECT, que, neste caso, são "pclass", "survived" e "media". Portanto, a cláusula GROUP BY é # usada para agrupar os resultados por essas três colunas.
+
+select pclass, survived, avg(age) as media from titanic group by pclass, survived
+
+
+
+
+
+
+
+
+
+
+CREATE DATABASE cadastroDB;
+
+use cadastroDB;
+
+CREATE TABLE FUNCIONARIOS (
+  
+	ID       INT             NOT NULL,
+
+        NOME     VARCHAR(20)     NOT NULL,
+
+	IDADE    INT             NOT NULL,
+
+        CIDADE   CHAR(25),
+
+        SALARIO  DECIMAL(18, 2),
+       
+ PRIMARY  KEY (ID)
+
+);
+
+DESC FUNCIONARIOS;
+
+INSERT INTO FUNCIONARIOS (ID,NOME,IDADE,CIDADE,SALARIO)
+
+VALUES (1, 'Pele', 32, 'Roma', 2000.00);
+
+SELECT ID, NOME, SALARIO FROM FUNCIONARIOS WHERE SALARIO > 2000 AND IDADE < 55
+
+UPDATE FUNCIONARIOS SET CIDADE = 'Boston' WHERE ID = 7;
+
+DELETE FROM FUNCIONARIOS WHERE ID = 6;
+
+
+
+select distinct cidade from FUNCIONARIOS;
+
+select count(*) from FUNCIONARIOS;
+
+
+# retorne cidade e a soma de salario por cidade
+
+select CIDADE, sum(SALARIO) as SOMA_SALARIO from FUNCIONARIOS group by CIDADE
+
+# filtrando por agrupamento
+
+select CIDADE, sum(SALARIO) as SOMA_SALARIO from FUNCIONARIOS group by CIDADE having sum(salario) > 4000;
+
+create table funcionarios_bkp as select * from funcionarios;
