@@ -78,10 +78,19 @@ select name, age, sex, pclass from titanic where age > 70;
 # fazendo agrupamento
 
 # seleciona as colunas "pclass" e "survived" da tabela "titanic" e calcula a média da idade
-# (coluna # "age") de cada grupo de dados, que é nomeada como "media" usando a função AVG no SELECT. # Para usar a função AVG em uma consulta, é necessário agrupar os resultados por todas as colunas que # estão no SELECT, que, neste caso, são "pclass", "survived" e "media". Portanto, a cláusula GROUP BY é # usada para agrupar os resultados por essas três colunas.
+# (coluna "age") de cada grupo de dados, que é nomeada como "media" usando a função AVG no SELECT. 
+# Para usar a função AVG em uma consulta, é necessário agrupar os resultados por todas as colunas que 
+# estão no SELECT, que, neste caso, são "pclass", "survived" e "media". Portanto, a cláusula GROUP BY é 
+# usada para agrupar os resultados por essas três colunas.
 
 select pclass, survived, avg(age) as media from titanic group by pclass, survived
 
+
+dados3 <- con3 %>%
+  select(pclass, survived, age) %>%
+  group_by(pclass, survived) %>%
+  summarise(media = mean(age, na.rm = TRUE)) %>%
+  collect()
 
 
 
