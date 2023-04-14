@@ -86,10 +86,11 @@ select name, age, sex, pclass from titanic where age > 70;
 select pclass, survived, avg(age) as media from titanic group by pclass, survived
 
 
-dados3 <- con3 %>%
+dados_dbplyr <- con3 %>%
   select(pclass, survived, age) %>%
+  filter(survived == 1) %>%
   group_by(pclass, survived) %>%
-  summarise(media = mean(age, na.rm = TRUE)) %>%
+  summarise(media_idade = mean(age, na.rm = TRUE)) %>%
   collect()
 
 
