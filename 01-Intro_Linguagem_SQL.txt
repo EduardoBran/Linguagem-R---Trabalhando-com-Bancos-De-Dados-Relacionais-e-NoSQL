@@ -9,9 +9,11 @@
 show databases;
 
 
+Abrir MySQL Workbench e conectar
 
 
-# Cria um banco de dados
+
+# Cria um banco de dados*
 
 
 CREATE DATABASE titanicDB;

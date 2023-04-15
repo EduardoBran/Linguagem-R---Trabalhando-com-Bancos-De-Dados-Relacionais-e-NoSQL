@@ -149,3 +149,76 @@ select CIDADE, sum(SALARIO) as SOMA_SALARIO from FUNCIONARIOS group by CIDADE
 select CIDADE, sum(SALARIO) as SOMA_SALARIO from FUNCIONARIOS group by CIDADE having sum(salario) > 4000;
 
 create table funcionarios_bkp as select * from funcionarios;
+
+
+
+
+
+
+
+
+
+
+
+
+############# Bancos de Dados Não Relacionais #############
+
+	É uma tecnlogia de banco de dados projetada para suportar os requisitos de aplicações em nuvem arquitetado para superar em escala e desempenhas as limitações de bancos de dados relacionais (RDBMS)
+
+	Nós usamos a tecnlogia NoSQL quando temos dados no formato JSON, XML, dados no formato de texto, documento, no formato de grafo, dados totalmente não estruturados.
+
+
+	Principais Banco de Dados NoSQL divididos por categoria
+
+- Categoria Graph (Grafo) - Neo4j , FlockDB , ArangoDB , GraphDB 
+- Categoria Document      - MongoDB, CouchDB, RavenDB, Terrastore
+- Categoria Key-Value     - Oracle NoSQL DB, Memcache, Redis, Voldemort
+- Categoria Column        - HBase, Cassandra, Hypertable, Accumulo
+
+
+
+	Por que aprender a usar Bancos de Dados NoSQL ?
+
+1. Bancos não relacionais permitem armazenar e processar dados em qualquer formato.
+
+
+2. Bancos não relacionais são, em geral, mais velozes.
+
+
+3. Bancos não relacionais tem uma estrutura de armazenamento simplificada, o que aumenta a produtividade    no trabalho com os dados. 
+
+
+4.  Bancos não relacionais não são substitutos de bancos relacionais, mas sim uma tecnologia complementar.
+
+
+5. Existem diversos tipos de bancos de dados não relacionais, cada qual aderente a uma necessidade do dia    a dia com os dados.
+
+
+
+
+	Sobre o MongoDB (diferenças com banco de dados relacionais)
+
+
+		MongoDB			RDBMS
+
+		Database		Database
+		Collection		Tabela              
+		Document		Linha/Tupla
+		Field			Coluna
+	Embedded Documents		Join de Tabelas (Junção de tabelas)
+	Primary Key			Primary Key
+
+
+
+* Carregando Dados no MongoDB através do MongoDBCompass
+
+
+Abrir o cmd e digitar 'mongod' para inicializar o mongo
+
+Abrir outro cmd e digitar 'mongo' para inicializar o shell do mongo (show dbs)
+
+Abrir o MongoDBCompass depois que 'mongod' tiver sido inicializado e conecta-lo
+
+Criar Database no MongoDBCompass
+
+Após criar, clicar em "add data" e "import file" e importar o documento.
