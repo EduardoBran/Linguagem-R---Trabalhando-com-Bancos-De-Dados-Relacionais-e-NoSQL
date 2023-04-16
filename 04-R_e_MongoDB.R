@@ -6,7 +6,18 @@ setwd("C:/Users/Julia/Desktop/CienciaDeDados/1.Big-Data-Analytics-com-R-e-Micros
 getwd()
 
 
+
 ## mongodb executando
+
+
+
+# - MapReduce é um modelo de programação utilizado para processamento paralelo e distribuído de grandes volumes de dados. Foi
+#   originalmente proposto pelo Google como uma forma de lidar com a indexação de páginas da web, mas atualmente é amplamente utilizado
+#   em várias aplicações, incluindo análise de dados e processamento de grandes conjuntos de dados.
+# - No contexto do MongoDB, o MapReduce pode ser usado para executar consultas complexas em grandes conjuntos de dados, permitindo a
+#   análise e a geração de relatórios de forma eficiente. O MadReduce é uma ferramenta que combina o poder do MongoDB com a linguagem de
+#   programação R para permitir a análise de dados em grande escala usando o modelo MapReduce.
+
 
 
 # Instalando e carregando pacotes
@@ -34,9 +45,15 @@ con <- mongo(db = "dsadb",
 print(con)
 
 
+# Visualiza os dados
+
+dados <- con$find()
+View(dados)
 
 
+# Verifica o número de registros no conjunto de dados
 
+con$count('{}')
 
 
 
