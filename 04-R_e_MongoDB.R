@@ -56,8 +56,6 @@ View(dados)
 
 con$count('{}')
 
-
-
 # Busca uma amostra de dados somente com propriedades do tipo House e suas políticas de cancelamento
 
 
@@ -116,13 +114,16 @@ View(amostra4)
 # - summarize(contagem = n(), media_reviews = mean(number_of_reviews)): Esta é outra função do dplyr que realiza o resumo dos dados
 #   agrupados. A função n() retorna o número de observações em cada grupo, ou seja, o total de registros para cada tipo de propriedade,
 #   que é atribuído à nova coluna contagem. A função mean(number_of_reviews) calcula a média dos valores do campo number_of_reviews
-#   em cada grupo, ou seja, a média dos reviews para cada tipo de propriedade, que é atribuída à nova coluna media_reviews.
+#   em cada grupo, ou seja, a média de reviews feitos para cada tipo de propriedade, que é atribuída à nova coluna media_reviews.
+#   Uma propriedade pode ter varios reviews enquanto outra pode ter 0 review. Por isso a média.
 
 amostra4_r <- dados %>%
   group_by(property_type) %>%
-  summarize(contagem = n(), media_reviews = mean(number_of_reviews))
+  summarize(contagem = n(), number_reviews = sum(number_of_reviews),
+            media_reviews = mean(number_of_reviews), media_price = mean(price), media_accommodates = mean(accommodates))
 
-names(amostra4_r) <- c("tipo_propriedade", "contagem", "media_reviews")
+names(amostra4_r) <- c("tipo_de_propriedade", "total_propriedade", "nº_total_reviews",
+                       "media_reviews_total_propriedade", "media_preco", "media_acomodacao")
 
 View(amostra4_r)
 
@@ -130,18 +131,53 @@ View(amostra4_r)
 
 # Gerando o resultado em um gráfico de barras
 
-ggplot(aes(tipo_propriedade, contagem), data = amostra4) + geom_col()
-ggplot(aes(tipo_propriedade, contagem), data = amostra4_r) + geom_col()
+ggplot(data = amostra4, aes(tipo_propriedade, contagem)) + geom_col()
+ggplot(data = amostra4_r, aes(tipo_de_propriedade, total_propriedade)) + geom_col()
+
+
+# Criar gráfico de barras comparando média de preço por tipo de propriedade
+
+ggplot(data = amostra4_r, aes(tipo_de_propriedade, total_propriedade)) +
+  geom_col(fill = "steelblue", width = 0.5) +
+  labs(title = "Comparação de Total de Propriedade",
+       x = "Tipo de Propriedade",
+       y = "Média de Preço") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotacionar rótulos do eixo x
+
+
+ggplot(data = amostra4_r, aes(tipo_de_propriedade, media_preco)) +
+  geom_col(fill = "steelblue", width = 0.5) +
+  labs(title = "Comparação de Média de Preço por Tipo de Propriedade",
+       x = "Tipo de Propriedade",
+       y = "Média de Preço") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotacionar rótulos do eixo x
+
+
+ggplot(data = amostra4_r, aes(tipo_de_propriedade, media_acomodacao)) +
+  geom_col(fill = "steelblue", width = 0.5) +
+  labs(title = "Comparação de Média de Acomodações por Tipo de Propriedade",
+       x = "Tipo de Propriedade",
+       y = "Média de Preço") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotacionar rótulos do eixo x
 
 
 
+# aqui estamos agrupando por grupo de property_type e cancellation_policy.
+
+amostra4_r2 <- dados %>%
+  group_by(property_type, cancellation_policy) %>%
+  summarize(contagem = n(),
+            number_reviews = sum(number_of_reviews),
+            media_reviews = mean(number_of_reviews),
+            media_price = mean(price),
+            media_accommodates = mean(accommodates))
 
 
-
-
-
-
-
+names(amostra4_r2) <- c("tipo_de_propriedade", "cancellation_policy", "total_propriedade", "nº_total_reviews",
+                        "media_reviews_total_propriedade", "media_preco", "media_acomodacao")
 
 
 
