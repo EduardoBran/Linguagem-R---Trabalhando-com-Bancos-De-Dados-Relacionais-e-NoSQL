@@ -8,15 +8,45 @@ getwd()
 # Exercicio 1 - Instale a carregue os pacotes necessários para trabalhar com SQLite e R
 
 
+install.packages('RSQLite')
+
+library(RSQLite)
+library(dbplyr)
+
+
+
 
 
 # Exercicio 2 - Crie a conexão para o arquivo mamiferos.sqlite em anexo a este script
+
+
+# Criando driver SQLite
+
+drv = dbDriver("SQLite")
+
+# Conectado ao banco de dados (bd será criado agora e será salvo neste mesmo diretório)
+
+mamiferos = dbConnect(drv, dbname = 'mamiferos.sqlite')
+
 
 
 
 
 # Exercicio 3 - Qual a versão do SQLite usada no banco de dados?
 # Dica: Consulte o help da função src_dbi()
+
+?src_dbi()
+
+
+# forma 1
+
+src_dbi(mamiferos)
+
+
+# forma 2
+
+versao_sqlite <- dbGetQuery(con, "SELECT sqlite_version() as version")
+
 
 
 
