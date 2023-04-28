@@ -429,3 +429,5 @@ print(tempo_execucao_op2)  # Tempo de execução da operação 2
 print(tempo_execucao_op3)  # Tempo de execução da operação 3
 
 
+
+
