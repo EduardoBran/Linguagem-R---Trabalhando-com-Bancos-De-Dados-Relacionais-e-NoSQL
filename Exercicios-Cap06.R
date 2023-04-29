@@ -12,6 +12,7 @@ install.packages('RSQLite')
 
 library(RSQLite)
 library(dbplyr)
+library(dplyr)
 
 
 
@@ -24,9 +25,13 @@ library(dbplyr)
 
 drv = dbDriver("SQLite")
 
-# Conectado ao banco de dados (bd será criado agora e será salvo neste mesmo diretório)
+# Conectando ao banco de dados já existente neste diretório
 
 mamiferos = dbConnect(drv, dbname = 'mamiferos.sqlite')
+
+# Verificando quantas tabelas existem em mamiferos.sqlite
+
+dbListTables(mamiferos) 
 
 
 
@@ -51,20 +56,41 @@ versao_sqlite <- dbGetQuery(con, "SELECT sqlite_version() as version")
 
 
 
-# Exercicio 4 - Execute a query abaixo no banco de dados e grave em um objero em R:
+# Exercicio 4 - Execute a query abaixo no banco de dados e grave em um objeto em R:
 # SELECT year, species_id, plot_id FROM surveys
+
+query = "SELECT year, species_id, plot_id FROM surveys"
+
+rs = dbSendQuery(mamiferos, query)
+
+dados = fetch(rs, n = -1)
+
+View(dados)
+class(dados)   # dataframe
+
+
+# query para exibir toda a tabela surveys
+
+query2 = "SELECT * FROM surveys"
+
+# query para exibir toda a tabela species
+
+query3 = "SELECT * FROM species"
+
 
 
 
 
 # Exercicio 5 - Qual o tipo de objeto criado no item anterior?
 
+# Dataframe
+
+
 
 
 
 # Exercicio 6 - Já carregamos a tabela abaixo para você. Selecione as colunas species_id, sex e weight com a seguinte condição:
 # Condição: weight < 5
-pesquisas <- tbl(mamiferos, "surveys")
 
 
 
@@ -74,7 +100,13 @@ pesquisas <- tbl(mamiferos, "surveys")
 
 
 
+
+
+
 # Exercicio 8 - Liste as tabelas do banco de dados carregado
+
+
+
 
 
 
@@ -83,10 +115,13 @@ pesquisas <- tbl(mamiferos, "surveys")
 
 
 
-
 # Exercicio 10 - Imprima os dados da tabela criada no item anterior
 
 
+
+
+
+# Exercicio 11 - Remova a tabela do banco de dados
 
 
 
