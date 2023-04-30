@@ -92,12 +92,21 @@ query3 = "SELECT * FROM species"
 # Exercicio 6 - Já carregamos a tabela abaixo para você. Selecione as colunas species_id, sex e weight com a seguinte condição:
 # Condição: weight < 5
 
+pesquisas <- tbl(mamiferos, "surveys")
+
+pesquisas <- as.data.frame(pesquisas)
+
+filtro <- pesquisas %>%
+  select(species_id, sex, weight) %>%
+  filter(weight < 5)
+
+
 
 
 
 # Exercicio 7 - Grave o resultado do item anterior em um objeto R. O objeto final deve ser um dataframe
 
-
+# já feito
 
 
 
@@ -105,7 +114,7 @@ query3 = "SELECT * FROM species"
 
 # Exercicio 8 - Liste as tabelas do banco de dados carregado
 
-
+dbListTables(mamiferos)
 
 
 
@@ -113,15 +122,27 @@ query3 = "SELECT * FROM species"
 
 # Exercicio 9 - A partir do dataframe criado no item 7, crie uma tabela no banco de dados
 
+dbWriteTable(mamiferos, 'tabela_nova', filtro, row.names = TRUE)
+
+dbListTables(mamiferos)
+
+
+
 
 
 # Exercicio 10 - Imprima os dados da tabela criada no item anterior
+
+dbReadTable(mamiferos, 'tabela_nova')
 
 
 
 
 
 # Exercicio 11 - Remova a tabela do banco de dados
+
+dbRemoveTable(mamiferos, "tabela_nova")
+
+dbListTables(mamiferos)
 
 
 
