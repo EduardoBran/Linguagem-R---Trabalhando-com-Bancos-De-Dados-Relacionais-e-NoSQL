@@ -106,7 +106,9 @@ filtro <- pesquisas %>%
 
 # Exercicio 7 - Grave o resultado do item anterior em um objeto R. O objeto final deve ser um dataframe
 
-# já feito
+filtro <- pesquisas %>%
+  select(species_id, sex, weight) %>%
+  filter(weight < 5)
 
 
 
